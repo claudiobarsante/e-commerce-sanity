@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/phanox/node_modules
+/sanity_phanox/node_modules
 /.pnp
 .pnp.js
 
