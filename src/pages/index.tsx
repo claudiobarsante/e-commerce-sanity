@@ -1,57 +1,49 @@
 import React from 'react';
-import { Product, FooterBanner, HeroBanner } from '../components';
-import { client } from 'lib/client';
 import { GetServerSideProps } from 'next';
-import { BannerInformation, HeroBannerProps } from 'components/HeroBanner';
-
-type Products = {
-	details: string;
-	image: any;
-	name: string;
-	price: number;
-	slug: { _type: string; current: string };
-};
+// -- Sanity client
+import { client } from 'lib/client';
+// -- Components
+import { Product, FooterBanner, HeroBanner } from 'components';
+// -- Types
+import { BannerInfo } from 'components/HeroBanner';
+import { ProductInfo } from 'components/Product';
 
 type Props = {
-	productsData: Products[];
-	bannerData: BannerInformation[];
+  productsData: ProductInfo[];
+  bannerData: BannerInfo[];
 };
 
 const Home = ({ productsData, bannerData }: Props) => {
-	return (
-		<>
-			{bannerData.length && <HeroBanner heroBanner={bannerData[0]} />}
+  return (
+    <>
+      {bannerData.length && <HeroBanner heroBanner={bannerData[0]} />}
 
-			<div className='products-heading'>
-				<h2>Best Selling products</h2>
-				<p>speaker there are many variations passages</p>
-			</div>
-			<div className='products-container'>{productsData?.map(product => product.name)}</div>
-			<FooterBanner />
-		</>
-	);
+      <div className="products-heading">
+        <h2>Best Selling products</h2>
+        <p>speaker there are many variations passages</p>
+      </div>
+      <div className="products-container">
+        {productsData?.map((product) => (
+          <Product key={product._id} product={product} />
+        ))}
+      </div>
+      {bannerData && <FooterBanner footerBanner={bannerData[0]} />}
+    </>
+  );
 };
 
 export default Home;
 export const getServerSideProps: GetServerSideProps = async () => {
-	const productsQuery = '*[_type == "product"]';
-	const productsData = await client.fetch(productsQuery);
-	// console.log(
-	// 	'🚀 ~ file: index.tsx ~ line 24 ~ constgetServerSideProps:GetServerSideProps= ~ productsData',
-	// 	productsData
-	// );
+  const productsQuery = '*[_type == "product"]';
+  const productsData = await client.fetch(productsQuery);
 
-	const bannerQuery = '*[_type == "banner"]';
-	const bannerData = await client.fetch(bannerQuery);
-	// console.log(
-	// 	'🚀 ~ file: index.tsx ~ line 29 ~ constgetServerSideProps:GetServerSideProps= ~ bannerData',
-	// 	bannerData
-	// );
+  const bannerQuery = '*[_type == "banner"]';
+  const bannerData = await client.fetch(bannerQuery);
 
-	return {
-		props: {
-			productsData,
-			bannerData,
-		},
-	};
+  return {
+    props: {
+      productsData,
+      bannerData
+    }
+  };
 };
