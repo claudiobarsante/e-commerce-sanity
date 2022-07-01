@@ -3,10 +3,11 @@ import Link from 'next/link';
 // -- Sanity client
 import { urlFor } from 'lib/client';
 
+type ImageContent = { _key: string; _type: string; asset: { _ref: string } };
 export type ProductInfo = {
   _id: string;
   details: string;
-  image: { _type: string; asset: { _ref: string } };
+  image: ImageContent[];
   name: string;
   price: number;
   slug: { _type: string; current: string };
