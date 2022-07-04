@@ -70,9 +70,6 @@ const CartProvider = ({ children }: CartProviderProps) => {
   const [totalQuantities, setTotalQuantities] = useState<number>(0);
   const [qty, setQty] = useState<number>(1);
 
-  let foundProduct: CartProductType | undefined;
-  let index;
-
   const onAddProductToCart = (product: Product, quantity: number) => {
     const isProductInCart = cartItems.find(
       (item: CartProductType) => item._id === product._id
@@ -84,17 +81,15 @@ const CartProvider = ({ children }: CartProviderProps) => {
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
     if (isProductInCart) {
-      const updatedCartItems: CartProductType[] = cartItems.map(
-        (cartProduct: CartProductType) => {
-          if (cartProduct._id === product._id) {
-            return {
-              ...cartProduct,
-              quantity: cartProduct.quantity + quantity
-            };
-          }
-          return cartProduct;
+      const updatedCartItems = cartItems.map((cartProduct) => {
+        if (cartProduct._id === product._id) {
+          return {
+            ...cartProduct,
+            quantity: cartProduct.quantity + quantity
+          };
         }
-      );
+        return cartProduct;
+      });
 
       setCartItems(updatedCartItems);
     } else {
@@ -107,8 +102,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   const onRemoveProductFromCart = (product: Product) => {
-    foundProduct = cartItems.find((item) => item._id === product._id);
-    const newCartItems = cartItems.filter((item) => item._id !== product._id);
+    const foundProduct = cartItems.find((item) => item._id === product._id);
 
     if (foundProduct) {
       setTotalPrice(
@@ -120,7 +114,9 @@ const CartProvider = ({ children }: CartProviderProps) => {
       );
     }
 
-    setCartItems(newCartItems);
+    setCartItems((previousCartItems) =>
+      previousCartItems.filter((item) => item._id !== product._id)
+    );
   };
 
   const toggleCartItemQuanitity = (
