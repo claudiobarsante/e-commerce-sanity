@@ -10,7 +10,7 @@ import {
 } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 // -- Context
-import { useCart } from 'context/cart';
+import { ActionType, useCart } from 'context/cart';
 // -- Sanity client
 import { urlFor } from 'lib/client';
 //import getStripe from '../lib/getStripe';
@@ -94,7 +94,10 @@ const Cart = () => {
                         <span
                           className="minus"
                           onClick={() =>
-                            toggleCartItemQuanitity(item._id, 'dec')
+                            toggleCartItemQuanitity(
+                              item,
+                              ActionType.DECREASE_ITEM_QTY
+                            )
                           }
                         >
                           <AiOutlineMinus />
@@ -105,7 +108,10 @@ const Cart = () => {
                         <span
                           className="plus"
                           onClick={() =>
-                            toggleCartItemQuanitity(item._id, 'inc')
+                            toggleCartItemQuanitity(
+                              item,
+                              ActionType.INCREASE_ITEM_QTY
+                            )
                           }
                         >
                           <AiOutlinePlus />
@@ -131,7 +137,7 @@ const Cart = () => {
               <h3>${totalPrice}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn" onClick={handleCheckout}>
+              <button type="button" className="btn" onClick={() => {}}>
                 Pay with Stripe
               </button>
             </div>

@@ -11,6 +11,11 @@ import { toast } from 'react-hot-toast';
 // -- Types
 import { ProductInfo as Product } from 'components/Product';
 
+export enum ActionType {
+  INCREASE_ITEM_QTY = 'inc',
+  DECREASE_ITEM_QTY = 'dec'
+}
+
 export type CartProductType = {
   quantity: number;
 } & Product;
@@ -27,7 +32,10 @@ export type CartContextData = {
   setTotalPrice: (price: number) => void;
   setTotalQuantities: (qty: number) => void;
   showCart: boolean;
-  toggleCartItemQuanitity: (id: string, value: number) => void;
+  toggleCartItemQuanitity: (
+    product: CartProductType,
+    cartAction: ActionType
+  ) => void;
   totalPrice: number;
   totalQuantities: number;
 };
@@ -57,9 +65,7 @@ export type CartProviderProps = {
 
 const CartProvider = ({ children }: CartProviderProps) => {
   const [showCart, setShowCart] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useState<CartProductType[]>(
-    [] as CartProductType[]
-  );
+  const [cartItems, setCartItems] = useState<CartProductType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalQuantities, setTotalQuantities] = useState<number>(0);
   const [qty, setQty] = useState<number>(1);
@@ -80,15 +86,17 @@ const CartProvider = ({ children }: CartProviderProps) => {
     if (isProductInCart) {
       const updatedCartItems: CartProductType[] = cartItems.map(
         (cartProduct: CartProductType) => {
-          if (cartProduct._id === product._id)
+          if (cartProduct._id === product._id) {
             return {
               ...cartProduct,
               quantity: cartProduct.quantity + quantity
             };
+          }
+          return cartProduct;
         }
       );
 
-      if (updatedCartItems) setCartItems(updatedCartItems);
+      setCartItems(updatedCartItems);
     } else {
       const currentProduct = { ...product, quantity: quantity };
 
@@ -115,25 +123,36 @@ const CartProvider = ({ children }: CartProviderProps) => {
     setCartItems(newCartItems);
   };
 
-  const toggleCartItemQuanitity = (id: string, value: string) => {
-    foundProduct = cartItems.find((item) => item._id === id);
-    index = cartItems.findIndex((product) => product._id === id);
-    const newCartItems = cartItems.filter((item) => item._id !== id);
+  const toggleCartItemQuanitity = (
+    product: CartProductType,
+    cartAction: string
+  ) => {
+    if (cartAction === ActionType.INCREASE_ITEM_QTY) {
+      setCartItems((previousCartItems) =>
+        previousCartItems.map((item) => {
+          if (item._id === product._id) {
+            return { ...item, quantity: item.quantity + 1 };
+          }
+          return item;
+        })
+      );
 
-    if (value === 'inc') {
-      setCartItems([
-        ...newCartItems,
-        { ...foundProduct, quantity: foundProduct.quantity + 1 }
-      ]);
-      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+      setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
-    } else if (value === 'dec') {
-      if (foundProduct.quantity > 1) {
-        setCartItems([
-          ...newCartItems,
-          { ...foundProduct, quantity: foundProduct.quantity - 1 }
-        ]);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
+    }
+
+    if (cartAction === ActionType.DECREASE_ITEM_QTY) {
+      if (product.quantity > 1) {
+        setCartItems((previousCartItems) =>
+          previousCartItems.map((item) => {
+            if (item._id === product._id) {
+              return { ...item, quantity: item.quantity - 1 };
+            }
+            return item;
+          })
+        );
+
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - product.price);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
       }
     }
