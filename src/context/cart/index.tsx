@@ -11,18 +11,18 @@ import { toast } from 'react-hot-toast';
 // -- Types
 import { ProductInfo as Product } from 'components/Product';
 
-type CartItemType = {
+export type CartProductType = {
   quantity: number;
 } & Product;
 
 export type CartContextData = {
-  cartItems: CartItemType[];
-  decQty: () => void;
-  incQty: () => void;
-  onAdd: (product: Product, quantity: number) => void;
-  onRemove: (product: Product) => void;
+  cartItems: CartProductType[];
+  decreaseQty: () => void;
+  increaseQty: () => void;
+  onAddProductToCart: (product: Product, quantity: number) => void;
+  onRemoveProductFromCart: (product: Product) => void;
   qty: number;
-  setCartItems: Dispatch<SetStateAction<CartItemType[]>>;
+  setCartItems: Dispatch<SetStateAction<CartProductType[]>>;
   setShowCart: Dispatch<SetStateAction<boolean>>;
   setTotalPrice: (price: number) => void;
   setTotalQuantities: (qty: number) => void;
@@ -34,10 +34,10 @@ export type CartContextData = {
 
 const cartContextDefaultValues = {
   cartItems: [],
-  decQty: () => null,
-  incQty: () => null,
-  onAdd: () => null,
-  onRemove: () => null,
+  decreaseQty: () => null,
+  increaseQty: () => null,
+  onAddProductToCart: () => null,
+  onRemoveProductFromCart: () => null,
   qty: 0,
   setCartItems: () => null,
   setShowCart: () => null,
@@ -56,20 +56,20 @@ export type CartProviderProps = {
 };
 
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [showCart, setShowCart] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItemType[]>(
-    [] as CartItemType[]
+  const [showCart, setShowCart] = useState<boolean>(false);
+  const [cartItems, setCartItems] = useState<CartProductType[]>(
+    [] as CartProductType[]
   );
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalQuantities, setTotalQuantities] = useState(0);
-  const [qty, setQty] = useState(1);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [totalQuantities, setTotalQuantities] = useState<number>(0);
+  const [qty, setQty] = useState<number>(1);
 
-  let foundProduct: CartItemType | undefined;
+  let foundProduct: CartProductType | undefined;
   let index;
 
-  const onAdd = (product: CartItemType, quantity: number) => {
-    const checkProductInCart = cartItems.find(
-      (item: CartItemType) => item._id === product._id
+  const onAddProductToCart = (product: Product, quantity: number) => {
+    const isProductInCart = cartItems.find(
+      (item: CartProductType) => item._id === product._id
     );
 
     setTotalPrice(
@@ -77,9 +77,9 @@ const CartProvider = ({ children }: CartProviderProps) => {
     );
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
-    if (checkProductInCart) {
-      const updatedCartItems: CartItemType[] = cartItems.map(
-        (cartProduct: CartItemType) => {
+    if (isProductInCart) {
+      const updatedCartItems: CartProductType[] = cartItems.map(
+        (cartProduct: CartProductType) => {
           if (cartProduct._id === product._id)
             return {
               ...cartProduct,
@@ -88,17 +88,17 @@ const CartProvider = ({ children }: CartProviderProps) => {
         }
       );
 
-      if (updatedCartItems) setCartItems(updatedCartItems!);
+      if (updatedCartItems) setCartItems(updatedCartItems);
     } else {
-      product.quantity = quantity;
+      const currentProduct = { ...product, quantity: quantity };
 
-      setCartItems([...cartItems, { ...product }]);
+      setCartItems([...cartItems, currentProduct]);
     }
 
     toast.success(`${qty} ${product.name} added to the cart.`);
   };
 
-  const onRemove = (product: CartItemType) => {
+  const onRemoveProductFromCart = (product: Product) => {
     foundProduct = cartItems.find((item) => item._id === product._id);
     const newCartItems = cartItems.filter((item) => item._id !== product._id);
 
@@ -139,13 +139,13 @@ const CartProvider = ({ children }: CartProviderProps) => {
     }
   };
 
-  const incQty = () => {
+  const increaseQty = () => {
     setQty((prevQty) => prevQty + 1);
   };
 
-  const decQty = () => {
+  const decreaseQty = () => {
     setQty((prevQty) => {
-      if (prevQty - 1 < 1) return 1;
+      if (prevQty - 1 < 1) return 0;
 
       return prevQty - 1;
     });
@@ -160,11 +160,11 @@ const CartProvider = ({ children }: CartProviderProps) => {
         totalPrice,
         totalQuantities,
         qty,
-        incQty,
-        decQty,
-        onAdd,
+        increaseQty,
+        decreaseQty,
+        onAddProductToCart,
         toggleCartItemQuanitity,
-        onRemove,
+        onRemoveProductFromCart,
         setCartItems,
         setTotalPrice,
         setTotalQuantities

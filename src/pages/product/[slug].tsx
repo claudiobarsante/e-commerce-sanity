@@ -11,7 +11,8 @@ import {
 import { client, urlFor } from 'lib/client';
 // -- Components,Types
 import Product, { ProductInfo } from 'components/Product';
-
+// -- Custom hooks
+import { useCart } from 'context/cart';
 type ProductDetailsProps = {
   product: ProductInfo;
   products: ProductInfo[];
@@ -22,8 +23,16 @@ export default function ProductDetails({
   products
 }: ProductDetailsProps) {
   const { image, name, details, price } = product;
-  console.log('image:', image);
+
   const [index, setIndex] = useState(0);
+
+  const {
+    decreaseQty,
+    increaseQty,
+    qty,
+    onAddProductToCart,
+    onRemoveProductFromCart
+  } = useCart();
 
   return (
     <div>
@@ -69,20 +78,28 @@ export default function ProductDetails({
           <div className="quantity">
             <h3>Quantity:</h3>
             <p className="quantity-desc">
-              <span className="minus" onClick={() => {}}>
+              <span className="minus" onClick={decreaseQty}>
                 <AiOutlineMinus />
               </span>
-              <span className="num">qty</span>
-              <span className="plus" onClick={() => {}}>
+              <span className="num">{qty}</span>
+              <span className="plus" onClick={increaseQty}>
                 <AiOutlinePlus />
               </span>
             </p>
           </div>
           <div className="buttons">
-            <button type="button" className="add-to-cart" onClick={() => {}}>
+            <button
+              type="button"
+              className="add-to-cart"
+              onClick={() => onAddProductToCart(product, qty)}
+            >
               Add to Cart
             </button>
-            <button type="button" className="buy-now" onClick={() => {}}>
+            <button
+              type="button"
+              className="buy-now"
+              onClick={() => onRemoveProductFromCart(product)}
+            >
               Buy Now
             </button>
           </div>
