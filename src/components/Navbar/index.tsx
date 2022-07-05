@@ -5,7 +5,7 @@ import { AiOutlineShopping } from 'react-icons/ai';
 // -- components
 import Cart from 'components/Cart';
 // -- Context
-import { useCart } from 'context/cart';
+import { CartStatus, useCart } from 'context/cart';
 
 const NavBar = () => {
   const { showCart, setShowCart, totalQuantities } = useCart();
@@ -18,7 +18,7 @@ const NavBar = () => {
       <button
         type="button"
         className="cart-icon"
-        onClick={() => setShowCart('show')}
+        onClick={() => setShowCart(CartStatus.SHOW)}
       >
         <AiOutlineShopping />
         <span className="cart-item-qty">{totalQuantities}</span>

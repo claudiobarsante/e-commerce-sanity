@@ -1,72 +1,22 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction
-} from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
-
+// -- Default values
+import { cartContextDefaultValues } from './defaultValues';
 // -- Types
+import {
+  ActionType,
+  CartContextData,
+  CartProductType,
+  CartProviderProps,
+  CartStatus,
+  ShowCartType
+} from './types';
 import { ProductInfo as Product } from 'components/Product';
-
-export enum ActionType {
-  INCREASE_ITEM_QTY = 'inc',
-  DECREASE_ITEM_QTY = 'dec'
-}
-
-export type CartProductType = {
-  quantity: number;
-} & Product;
-
-export type ShowCartType = 'initial' | 'show' | 'hide';
-
-export type CartContextData = {
-  cartItems: CartProductType[];
-  decreaseQty: () => void;
-  increaseQty: () => void;
-  onAddProductToCart: (product: Product, quantity: number) => void;
-  onRemoveProductFromCart: (product: Product) => void;
-  qty: number;
-  setCartItems: Dispatch<SetStateAction<CartProductType[]>>;
-  setShowCart: Dispatch<SetStateAction<ShowCartType>>;
-  setTotalPrice: (price: number) => void;
-  setTotalQuantities: (qty: number) => void;
-  showCart: ShowCartType;
-  toggleCartItemQuanitity: (
-    product: CartProductType,
-    cartAction: ActionType
-  ) => void;
-  totalPrice: number;
-  totalQuantities: number;
-};
-
-const cartContextDefaultValues = {
-  cartItems: [],
-  decreaseQty: () => null,
-  increaseQty: () => null,
-  onAddProductToCart: () => null,
-  onRemoveProductFromCart: () => null,
-  qty: 0,
-  setCartItems: () => null,
-  setShowCart: () => null,
-  setTotalPrice: () => null,
-  setTotalQuantities: () => null,
-  showCart: 'initial' as ShowCartType,
-  toggleCartItemQuanitity: () => null,
-  totalPrice: 0,
-  totalQuantities: 0
-};
 
 const CartContext = createContext<CartContextData>(cartContextDefaultValues);
 
-export type CartProviderProps = {
-  children: React.ReactNode;
-};
-
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [showCart, setShowCart] = useState<ShowCartType>('initial');
+  const [showCart, setShowCart] = useState<ShowCartType>(CartStatus.INITIAL);
   const [cartItems, setCartItems] = useState<CartProductType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalQuantities, setTotalQuantities] = useState<number>(0);

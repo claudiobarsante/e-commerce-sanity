@@ -10,9 +10,11 @@ import {
 } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 // -- Context
-import { ActionType, ShowCartType, useCart } from 'context/cart';
+import { useCart } from 'context/cart';
 // -- Sanity client
 import { urlFor } from 'lib/client';
+// -- Types
+import { ActionType, CartStatus, ShowCartType } from 'context/cart/types';
 //import getStripe from '../lib/getStripe';
 
 type CartProps = {
@@ -49,9 +51,9 @@ const Cart = ({ isVisible }: CartProps) => {
   //     stripe.redirectToCheckout({ sessionId: data.id });
   //   }
   const displayClass = {
-    initial: 'cart-wrapper-initial',
-    show: 'cart-wrapper cart-wrapper-show',
-    hide: 'cart-wrapper cart-wrapper-hide'
+    [CartStatus.INITIAL]: 'cart-wrapper-initial',
+    [CartStatus.SHOW]: 'cart-wrapper cart-wrapper-show',
+    [CartStatus.HIDDEN]: 'cart-wrapper cart-wrapper-hide'
   };
 
   return (
@@ -60,7 +62,7 @@ const Cart = ({ isVisible }: CartProps) => {
         <button
           type="button"
           className="cart-heading"
-          onClick={() => setShowCart('hide')}
+          onClick={() => setShowCart(CartStatus.HIDDEN)}
         >
           <AiOutlineLeft />
           <span className="heading">Your Cart</span>
@@ -74,7 +76,7 @@ const Cart = ({ isVisible }: CartProps) => {
             <Link href="/">
               <button
                 type="button"
-                onClick={() => setShowCart('hide')}
+                onClick={() => setShowCart(CartStatus.HIDDEN)}
                 className="btn"
               >
                 Continue Shopping

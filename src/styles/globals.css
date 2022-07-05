@@ -272,8 +272,7 @@ text-align: end;
   right: 0;
   top: 0;
   z-index: 100;  
-  opacity: 0;
-  animation: showCart 3s forwards;   
+  animation: showCart 3s forwards; 
   
 }
 
