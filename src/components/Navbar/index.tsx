@@ -18,12 +18,12 @@ const NavBar = () => {
       <button
         type="button"
         className="cart-icon"
-        onClick={() => setShowCart(true)}
+        onClick={() => setShowCart('show')}
       >
         <AiOutlineShopping />
         <span className="cart-item-qty">{totalQuantities}</span>
       </button>
-      {showCart && <Cart />}
+      <Cart isVisible={showCart} />
     </div>
   );
 };

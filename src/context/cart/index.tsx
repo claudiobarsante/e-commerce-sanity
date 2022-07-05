@@ -20,6 +20,8 @@ export type CartProductType = {
   quantity: number;
 } & Product;
 
+export type ShowCartType = 'initial' | 'show' | 'hide';
+
 export type CartContextData = {
   cartItems: CartProductType[];
   decreaseQty: () => void;
@@ -28,10 +30,10 @@ export type CartContextData = {
   onRemoveProductFromCart: (product: Product) => void;
   qty: number;
   setCartItems: Dispatch<SetStateAction<CartProductType[]>>;
-  setShowCart: Dispatch<SetStateAction<boolean>>;
+  setShowCart: Dispatch<SetStateAction<ShowCartType>>;
   setTotalPrice: (price: number) => void;
   setTotalQuantities: (qty: number) => void;
-  showCart: boolean;
+  showCart: ShowCartType;
   toggleCartItemQuanitity: (
     product: CartProductType,
     cartAction: ActionType
@@ -51,7 +53,7 @@ const cartContextDefaultValues = {
   setShowCart: () => null,
   setTotalPrice: () => null,
   setTotalQuantities: () => null,
-  showCart: false,
+  showCart: 'initial' as ShowCartType,
   toggleCartItemQuanitity: () => null,
   totalPrice: 0,
   totalQuantities: 0
@@ -64,7 +66,7 @@ export type CartProviderProps = {
 };
 
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [showCart, setShowCart] = useState<boolean>(false);
+  const [showCart, setShowCart] = useState<ShowCartType>('initial');
   const [cartItems, setCartItems] = useState<CartProductType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalQuantities, setTotalQuantities] = useState<number>(0);

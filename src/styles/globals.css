@@ -271,10 +271,42 @@ text-align: end;
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 100;
-  /* will-change: transform; */
-  transition: all 1s ease-in-out;
+  z-index: 100;  
+  opacity: 0;
+  animation: showCart 3s forwards;   
+  
+}
 
+.cart-wrapper-initial{
+  display:none;
+}
+.cart-wrapper-show{
+    animation: showCart 3s forwards;  
+}
+
+@keyframes showCart{
+  0%{
+      opacity: 0;
+  }
+  100%{
+      opacity: 1;
+      
+  }
+}
+
+.cart-wrapper-hide{ 
+  animation: hideCart 2s forwards;  
+}
+
+@keyframes hideCart{
+  0%{
+      opacity: 1;
+  } 
+  100%{
+      opacity: 0;
+      visibility: hidden;   
+      
+  }
 }
 .cart-container{
   height: 100vh;
@@ -283,6 +315,7 @@ text-align: end;
   float: right;
   padding: 40px 10px;
   position: relative;
+
   
 }
 
