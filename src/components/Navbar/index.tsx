@@ -5,7 +5,8 @@ import { AiOutlineShopping } from 'react-icons/ai';
 // -- components
 import Cart from 'components/Cart';
 // -- Context
-import { CartStatus, useCart } from 'context/cart';
+import { useCart } from 'context/cart';
+import { CartStatus } from 'context/cart/types';
 
 const NavBar = () => {
   const { showCart, setShowCart, totalQuantities } = useCart();
