@@ -1,3 +1,4 @@
+import { CartProductType } from 'context/cart/types';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -19,7 +20,7 @@ export default async function handler(
           { shipping_rate: 'shr_1LIakNG5gxMlocmAGYBaaAOn' },
           { shipping_rate: 'shr_1LIamLG5gxMlocmAUYxvjxP8' }
         ],
-        line_items: req.body.map((item) => {
+        line_items: req.body.map((item: CartProductType) => {
           const img = item.image[0].asset._ref;
           const newImage = img
             .replace(

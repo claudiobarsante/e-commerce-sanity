@@ -1,4 +1,5 @@
 import React from 'react';
+import Img from 'next/image';
 import Link from 'next/link';
 // -- Types
 import { BannerInfo } from 'components/HeroBanner';
@@ -40,8 +41,8 @@ const index = ({ footerBanner }: FooterBannerprops) => {
             </button>
           </Link>
         </div>
-        <img
-          src={urlFor(image.asset)}
+        <Img
+          src={urlFor(image.asset).url()}
           alt={product}
           className="footer-banner-image"
         />

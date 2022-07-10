@@ -1,4 +1,5 @@
 import React from 'react';
+import Img from 'next/image';
 import Link from 'next/link';
 // -- Sanity client
 import { urlFor } from 'lib/client';
@@ -28,8 +29,8 @@ const index = ({ heroBanner }: HeroBannerProps) => {
         <p className="beats-solo">{smallText}</p>
         <h3>{midText}</h3>
         <h1>{largeText1}</h1>
-        <img
-          src={urlFor(image)}
+        <Img
+          src={urlFor(image).url()}
           alt={smallText}
           className="hero-banner-image"
         />

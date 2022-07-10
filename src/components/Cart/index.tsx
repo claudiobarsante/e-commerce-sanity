@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import Img from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 // -- Icons
@@ -11,7 +12,7 @@ import {
 import { TiDeleteOutline } from 'react-icons/ti';
 // -- Context
 import { useCart } from 'context/cart';
-// -- Sanity client
+// -- Sanity image builder
 import { urlFor } from 'lib/client';
 // -- Types
 import { ActionType, CartStatus, ShowCartType } from 'context/cart/types';
@@ -21,7 +22,7 @@ type CartProps = {
   isVisible: ShowCartType;
 };
 const Cart = ({ isVisible }: CartProps) => {
-  const cartRef = useRef();
+  const cartRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   const {
     totalPrice,
     totalQuantities,
@@ -90,8 +91,8 @@ const Cart = ({ isVisible }: CartProps) => {
           {cartItems.length >= 1 &&
             cartItems.map((item) => (
               <div className="product" key={item._id}>
-                <img
-                  src={urlFor(item?.image[0])}
+                <Img
+                  src={urlFor(item?.image[0]).url()}
                   className="cart-product-image"
                 />
                 <div className="item-desc">
@@ -113,9 +114,7 @@ const Cart = ({ isVisible }: CartProps) => {
                         >
                           <AiOutlineMinus />
                         </span>
-                        <span className="num" onClick="">
-                          {item.quantity}
-                        </span>
+                        <span className="num">{item.quantity}</span>
                         <span
                           className="plus"
                           onClick={() =>
