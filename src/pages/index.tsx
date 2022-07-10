@@ -1,7 +1,7 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
 // -- Sanity client
-import { client } from 'lib/client';
+import { configuredSanityClient } from 'lib/client';
 // -- Components
 import { Product, FooterBanner, HeroBanner } from 'components';
 // -- Types
@@ -36,10 +36,10 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const productsQuery = '*[_type == "product"]';
-  const productsData = await client.fetch(productsQuery);
+  const productsData = await configuredSanityClient.fetch(productsQuery);
 
   const bannerQuery = '*[_type == "banner"]';
-  const bannerData = await client.fetch(bannerQuery);
+  const bannerData = await configuredSanityClient.fetch(bannerQuery);
 
   return {
     props: {

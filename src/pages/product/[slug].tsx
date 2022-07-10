@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
+import Img from 'next/image';
+
 // -- Icons
 import {
   AiOutlineMinus,
@@ -8,11 +10,15 @@ import {
   AiOutlineStar
 } from 'react-icons/ai';
 // -- Sanity client
-import { client, urlFor } from 'lib/client';
+import { configuredSanityClient, urlFor } from 'lib/client';
 // -- Components,Types
 import Product, { ProductInfo } from 'components/Product';
 // -- Custom hooks
 import { useCart } from 'context/cart';
+// -- Types
+import { CartStatus } from 'context/cart/types';
+import ProductDetail from 'components/Product/ProductDetail';
+
 type ProductDetailsProps = {
   product: ProductInfo;
   products: ProductInfo[];
@@ -22,38 +28,36 @@ export default function ProductDetails({
   product,
   products
 }: ProductDetailsProps) {
-  const { image, name, details, price } = product;
-
   const [index, setIndex] = useState(0);
 
-  const {
-    decreaseQty,
-    increaseQty,
-    qty,
-    onAddProductToCart,
-    onRemoveProductFromCart
-  } = useCart();
+  const { image, name, details, price } = product;
+
+  const { decreaseQty, increaseQty, qty, onAddProductToCart, setShowCart } =
+    useCart();
+
+  const handleBuyNow = () => {
+    onAddProductToCart(product, qty);
+    setShowCart(CartStatus.SHOW);
+  };
 
   return (
     <div>
       <div className="product-detail-container">
         <div>
-          <div className="image-container">
-            <img
-              src={urlFor(image && image[index])}
-              className="product-detail-image"
-            />
-          </div>
+          <ProductDetail image={image} name={name} index={index} />
+
           <div className="small-images-container">
             {image?.map((item, currentIndex) => (
-              <img
+              <Img
                 key={currentIndex}
-                src={urlFor(item)}
+                src={urlFor(item).url()}
                 className={
                   currentIndex === index
                     ? 'small-image selected-image'
                     : 'small-image'
                 }
+                height={70}
+                width={70}
                 onMouseEnter={() => setIndex(currentIndex)}
               />
             ))}
@@ -98,7 +102,7 @@ export default function ProductDetails({
             <button
               type="button"
               className="buy-now"
-              onClick={() => onRemoveProductFromCart(product)}
+              onClick={() => handleBuyNow}
             >
               Buy Now
             </button>
@@ -131,7 +135,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         }
         `;
 
-  const products: ProductInfo[] = await client.fetch(query);
+  const products: ProductInfo[] = await configuredSanityClient.fetch(query);
 
   const paths = products.map((product) => ({
     params: {
@@ -151,8 +155,8 @@ export const getStaticProps: GetStaticProps = async ({
   const query = `*[_type == "product" && slug.current == '${params?.slug}'][0]`;
   const productsQuery = '*[_type == "product"]';
 
-  const product = await client.fetch(query);
-  const products = await client.fetch(productsQuery);
+  const product = await configuredSanityClient.fetch(query);
+  const products = await configuredSanityClient.fetch(productsQuery);
 
   return {
     props: {
