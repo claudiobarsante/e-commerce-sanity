@@ -1,8 +1,9 @@
 import React from 'react';
-import { ProductInfo } from '..';
 import Img from 'next/image';
 // -- Sanity image builder
 import { urlFor } from 'lib/client';
+// -- Custom components
+import { ProductInfo } from '..';
 
 type ProductDetailProps = { index: number } & Pick<
   ProductInfo,

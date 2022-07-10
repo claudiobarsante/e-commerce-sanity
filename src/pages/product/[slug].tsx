@@ -18,6 +18,7 @@ import { useCart } from 'context/cart';
 // -- Types
 import { CartStatus } from 'context/cart/types';
 import ProductDetail from 'components/Product/ProductDetail';
+import ProductThumbnail from 'components/Product/ProductThumbnail';
 
 type ProductDetailsProps = {
   product: ProductInfo;
@@ -45,23 +46,12 @@ export default function ProductDetails({
       <div className="product-detail-container">
         <div>
           <ProductDetail image={image} name={name} index={index} />
-
-          <div className="small-images-container">
-            {image?.map((item, currentIndex) => (
-              <Img
-                key={currentIndex}
-                src={urlFor(item).url()}
-                className={
-                  currentIndex === index
-                    ? 'small-image selected-image'
-                    : 'small-image'
-                }
-                height={70}
-                width={70}
-                onMouseEnter={() => setIndex(currentIndex)}
-              />
-            ))}
-          </div>
+          <ProductThumbnail
+            image={image}
+            name={name}
+            index={index}
+            onSetIndex={setIndex}
+          />
         </div>
 
         <div className="product-detail-desc">
