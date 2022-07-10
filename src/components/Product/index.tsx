@@ -1,6 +1,7 @@
 import React from 'react';
+import Img from 'next/image';
 import Link from 'next/link';
-// -- Sanity client
+// -- Sanity image builder
 import { urlFor } from 'lib/client';
 
 type ImageContent = { _key: string; _type: string; asset: { _ref: string } };
@@ -23,13 +24,16 @@ const index = ({ product }: ProductProps) => {
     <div>
       <Link href={`/product/${slug.current}`}>
         <div className="product-card">
-          <img
-            src={urlFor(image && image[0])}
-            alt={name}
-            width={250}
-            height={250}
-            className="product-image"
-          />
+          {image && (
+            <Img
+              src={urlFor(image[0]).url()}
+              alt={name}
+              width={250}
+              height={250}
+              className="product-image"
+            />
+          )}
+
           <p className="product-name">{name}</p>
           <p className="product-price">${price}</p>
         </div>
