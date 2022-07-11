@@ -12,6 +12,8 @@ import {
   ShowCartType
 } from './types';
 import { ProductInfo as Product } from 'components/Product';
+// -- Custom hooks
+import { useProductQty } from '../cart/hooks';
 
 const CartContext = createContext<CartContextData>(cartContextDefaultValues);
 
@@ -20,7 +22,9 @@ const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<CartProductType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalQuantities, setTotalQuantities] = useState<number>(0);
-  const [qty, setQty] = useState<number>(1);
+  //const [qty, setQty] = useState<number>(1);
+
+  const { qty, increaseQty, decreaseQty } = useProductQty();
 
   const onAddProductToCart = (product: Product, quantity: number) => {
     const isProductInCart = cartItems.find(
@@ -106,17 +110,17 @@ const CartProvider = ({ children }: CartProviderProps) => {
     }
   };
 
-  const increaseQty = () => {
-    setQty((prevQty) => prevQty + 1);
-  };
+  // const increaseQty = () => {
+  //   setQty((prevQty) => prevQty + 1);
+  // };
 
-  const decreaseQty = () => {
-    setQty((prevQty) => {
-      if (prevQty - 1 < 1) return 0;
+  // const decreaseQty = () => {
+  //   setQty((prevQty) => {
+  //     if (prevQty - 1 < 1) return 0;
 
-      return prevQty - 1;
-    });
-  };
+  //     return prevQty - 1;
+  //   });
+  // };
 
   return (
     <CartContext.Provider

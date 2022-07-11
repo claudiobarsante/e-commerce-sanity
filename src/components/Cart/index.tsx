@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import Img from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -21,6 +21,7 @@ import { getStripe } from 'lib/stripe-js';
 type CartProps = {
   isVisible: ShowCartType;
 };
+
 const Cart = ({ isVisible }: CartProps) => {
   const cartRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   const {
@@ -32,7 +33,7 @@ const Cart = ({ isVisible }: CartProps) => {
     onRemoveProductFromCart
   } = useCart();
 
-  const handleCheckout = async () => {
+  const handleCheckout = useCallback(async () => {
     const stripe = await getStripe();
 
     const response = await fetch('/api/stripe', {
@@ -50,7 +51,7 @@ const Cart = ({ isVisible }: CartProps) => {
     toast.loading('Redirecting...');
 
     stripe!.redirectToCheckout({ sessionId: data.id });
-  };
+  }, [cartItems]);
 
   const displayClass = {
     [CartStatus.INITIAL]: 'cart-wrapper-initial',
