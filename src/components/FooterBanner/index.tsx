@@ -45,6 +45,7 @@ const index = ({ footerBanner }: FooterBannerprops) => {
           src={urlFor(image.asset).url()}
           alt={product}
           className="footer-banner-image"
+          layout="fill"
         />
       </div>
     </div>

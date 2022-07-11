@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { Toaster } from 'react-hot-toast';
+import NextNprogress from 'nextjs-progressbar';
 // -- Components
 import Layout from 'components/Layout';
 // -- Context
@@ -12,6 +13,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     <CartProvider>
       <Layout>
         <Toaster />
+        <NextNprogress
+          color="#f02d34"
+          startPosition={0.3}
+          stopDelayMs={200}
+          height={3}
+          showOnShallow={true}
+        />
         <Component {...pageProps} />
       </Layout>
     </CartProvider>

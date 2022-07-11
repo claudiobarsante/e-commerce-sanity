@@ -1,5 +1,6 @@
 import { CartProductType } from 'context/cart/types';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getErrorMessage } from 'lib/getError';
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -8,7 +9,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    console.log('request', req.body);
+    console.log('request', JSON.stringify(req.body));
 
     try {
       const params = {
@@ -25,7 +26,7 @@ export default async function handler(
           const newImage = img
             .replace(
               'image-',
-              `https://cdn.sanity.io/images/${process.env.SANITY_PROJECT_ID}/production/`
+              `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/production/`
             )
             .replace('-webp', '.webp');
 
@@ -38,10 +39,10 @@ export default async function handler(
               },
               unit_amount: item.price * 100 // unit amount has to be in cents(so multiply by 100)
             },
-            adjustable_quantity: {
-              enabled: true,
-              minimum: 1
-            },
+            //   adjustable_quantity: {
+            //     enabled: true,
+            //     minimum: 1
+            //   },
             quantity: item.quantity
           };
         }),
@@ -54,7 +55,7 @@ export default async function handler(
 
       res.status(200).json(session);
     } catch (err) {
-      res.status(err.statusCode || 500).json(err.message);
+      res.status(500).json(getErrorMessage(err));
     }
   } else {
     res.setHeader('Allow', 'POST');

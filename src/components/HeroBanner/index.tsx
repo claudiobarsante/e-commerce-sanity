@@ -29,11 +29,16 @@ const index = ({ heroBanner }: HeroBannerProps) => {
         <p className="beats-solo">{smallText}</p>
         <h3>{midText}</h3>
         <h1>{largeText1}</h1>
-        <Img
-          src={urlFor(image).url()}
-          alt={smallText}
-          className="hero-banner-image"
-        />
+        <div className="hero-banner-image">
+          <Img
+            src={urlFor(image).url()}
+            alt={smallText}
+            layout="fill"
+            objectFit="contain"
+            priority
+          />
+        </div>
+
         <Link href={`/product/${product}`}>
           <button type="button" className="" role="button">
             {buttonText}

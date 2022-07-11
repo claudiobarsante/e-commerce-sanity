@@ -11,7 +11,7 @@ const index = ({ children }: LayoutProps) => {
   return (
     <div className="layout">
       <Head>
-        <title>Phanox store</title>
+        <title>📢📢📢Sound store</title>
       </Head>
       <header>
         <Navbar />

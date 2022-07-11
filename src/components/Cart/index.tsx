@@ -91,10 +91,14 @@ const Cart = ({ isVisible }: CartProps) => {
           {cartItems.length >= 1 &&
             cartItems.map((item) => (
               <div className="product" key={item._id}>
-                <Img
-                  src={urlFor(item?.image[0]).url()}
-                  className="cart-product-image"
-                />
+                <div className="cart-product-image">
+                  <Img
+                    src={urlFor(item?.image[0]).url()}
+                    layout="responsive"
+                    height={450}
+                    width={450}
+                  />
+                </div>
                 <div className="item-desc">
                   <div className="flex top">
                     <h5>{item.name}</h5>
