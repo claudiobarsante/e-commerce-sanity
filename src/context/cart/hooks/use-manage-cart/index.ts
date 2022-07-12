@@ -5,12 +5,48 @@ import { ActionType, CartProductType } from 'context/cart/types';
 // -- components
 import { ProductInfo as Product } from 'components/Product';
 
+type OperationType = 'increase' | 'decrease';
+
 export default function useManageCart() {
   const [cartItems, setCartItems] = useState<CartProductType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalQuantities, setTotalQuantities] = useState<number>(0);
 
+  const updateProductQty = (
+    cartItems: CartProductType[],
+    operation: OperationType,
+    quantity: number,
+    productId: string
+  ) => {
+    console.log(
+      '🚀 ~ file: index.ts ~ line 22 ~ updatedCartItems ~ cartItems',
+      cartItems
+    );
+    const updatedCartItems = cartItems.map((cartProduct) => {
+      if (cartProduct._id === productId) {
+        let updatedQuantity = cartProduct.quantity;
+        console.log('operation', operation);
+        if (operation === 'increase') updatedQuantity += quantity;
+        if (operation === 'decrease') updatedQuantity -= quantity;
+        console.log('passei');
+        return {
+          ...cartProduct,
+          quantity: updatedQuantity
+        };
+      } else {
+        return cartProduct;
+      }
+    });
+
+    console.log(
+      '🚀 ~ file: index.ts ~ line 36 ~ useManageCart ~ updatedCartItems',
+      updatedCartItems
+    );
+    setCartItems(updatedCartItems);
+  };
+
   const onAddProductToCart = (product: Product, quantity: number) => {
+    console.log('product', product);
     const isProductInCart = cartItems.find(
       (item: CartProductType) => item._id === product._id
     );
@@ -21,17 +57,7 @@ export default function useManageCart() {
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
     if (isProductInCart) {
-      const updatedCartItems = cartItems.map((cartProduct) => {
-        if (cartProduct._id === product._id) {
-          return {
-            ...cartProduct,
-            quantity: cartProduct.quantity + quantity
-          };
-        }
-        return cartProduct;
-      });
-
-      setCartItems(updatedCartItems);
+      updateProductQty(cartItems, 'increase', 1, product._id);
     } else {
       const currentProduct = { ...product, quantity: quantity };
 
@@ -52,11 +78,11 @@ export default function useManageCart() {
       setTotalQuantities(
         (prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity
       );
-    }
 
-    setCartItems((previousCartItems) =>
-      previousCartItems.filter((item) => item._id !== product._id)
-    );
+      setCartItems((previousCartItems) =>
+        previousCartItems.filter((item) => item._id !== product._id)
+      );
+    }
   };
 
   const toggleCartItemQuanitity = (
