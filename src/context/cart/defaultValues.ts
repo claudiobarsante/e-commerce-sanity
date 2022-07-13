@@ -12,7 +12,7 @@ export const cartContextDefaultValues = {
   setTotalPrice: () => null,
   setTotalQuantities: () => null,
   showCart: CartStatus.INITIAL,
-  toggleCartItemQuanitity: () => null,
+  updateCart: () => null,
   totalPrice: 0,
   totalQuantities: 0
 };

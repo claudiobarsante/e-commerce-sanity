@@ -8,7 +8,6 @@ import {
   CartStatus,
   ShowCartType
 } from './types';
-
 // -- Custom hooks
 import { useProductQty, useManageCart } from '../cart/hooks';
 
@@ -25,7 +24,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
     setCartItems,
     setTotalPrice,
     setTotalQuantities,
-    toggleCartItemQuanitity,
+    updateCart,
     totalPrice,
     totalQuantities
   } = useManageCart();
@@ -44,7 +43,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
         setCartItems,
         setTotalPrice,
         setTotalQuantities,
-        toggleCartItemQuanitity,
+        updateCart,
         totalPrice,
         totalQuantities
       }}

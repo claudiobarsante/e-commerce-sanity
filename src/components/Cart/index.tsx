@@ -29,7 +29,7 @@ const Cart = ({ isVisible }: CartProps) => {
     totalQuantities,
     cartItems,
     setShowCart,
-    toggleCartItemQuanitity,
+    updateCart,
     onRemoveProductFromCart
   } = useCart();
 
@@ -90,11 +90,11 @@ const Cart = ({ isVisible }: CartProps) => {
 
         <div className="product-container">
           {cartItems.length >= 1 &&
-            cartItems.map((item) => (
-              <div className="product" key={item._id}>
+            cartItems.map((product) => (
+              <div className="product" key={product._id}>
                 <div className="cart-product-image">
                   <Img
-                    src={urlFor(item?.image[0]).url()}
+                    src={urlFor(product?.image[0]).url()}
                     layout="responsive"
                     height={450}
                     width={450}
@@ -102,8 +102,8 @@ const Cart = ({ isVisible }: CartProps) => {
                 </div>
                 <div className="item-desc">
                   <div className="flex top">
-                    <h5>{item.name}</h5>
-                    <h4>${item.price}</h4>
+                    <h5>{product.name}</h5>
+                    <h4>${product.price}</h4>
                   </div>
                   <div className="flex bottom">
                     <div>
@@ -111,22 +111,16 @@ const Cart = ({ isVisible }: CartProps) => {
                         <span
                           className="minus"
                           onClick={() =>
-                            toggleCartItemQuanitity(
-                              item,
-                              ActionType.DECREASE_ITEM_QTY
-                            )
+                            updateCart(product, ActionType.DECREASE_PRODUCT_QTY)
                           }
                         >
                           <AiOutlineMinus />
                         </span>
-                        <span className="num">{item.quantity}</span>
+                        <span className="num">{product.quantity}</span>
                         <span
                           className="plus"
                           onClick={() =>
-                            toggleCartItemQuanitity(
-                              item,
-                              ActionType.INCREASE_ITEM_QTY
-                            )
+                            updateCart(product, ActionType.INCREASE_PRODUCT_QTY)
                           }
                         >
                           <AiOutlinePlus />
@@ -136,7 +130,7 @@ const Cart = ({ isVisible }: CartProps) => {
                     <button
                       type="button"
                       className="remove-item"
-                      onClick={() => onRemoveProductFromCart(item)}
+                      onClick={() => onRemoveProductFromCart(product)}
                     >
                       <TiDeleteOutline />
                     </button>

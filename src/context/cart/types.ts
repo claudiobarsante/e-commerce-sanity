@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { ProductInfo as Product } from 'components/Product';
 
 export enum ActionType {
-  INCREASE_ITEM_QTY = 'inc',
-  DECREASE_ITEM_QTY = 'dec'
+  INCREASE_PRODUCT_QTY = 'inc',
+  DECREASE_PRODUCT_QTY = 'dec'
 }
 
 export type CartProductType = {
@@ -33,10 +33,7 @@ export type CartContextData = {
   setTotalPrice: (price: number) => void;
   setTotalQuantities: (qty: number) => void;
   showCart: ShowCartType;
-  toggleCartItemQuanitity: (
-    product: CartProductType,
-    cartAction: ActionType
-  ) => void;
+  updateCart: (product: CartProductType, cartAction: ActionType) => void;
   totalPrice: number;
   totalQuantities: number;
 };

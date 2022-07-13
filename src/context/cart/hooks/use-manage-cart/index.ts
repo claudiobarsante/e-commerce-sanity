@@ -5,8 +5,6 @@ import { ActionType, CartProductType } from 'context/cart/types';
 // -- components
 import { ProductInfo as Product } from 'components/Product';
 
-type OperationType = 'increase' | 'decrease';
-
 export default function useManageCart() {
   const [cartItems, setCartItems] = useState<CartProductType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -14,55 +12,58 @@ export default function useManageCart() {
 
   const updateProductQty = (
     cartItems: CartProductType[],
-    operation: OperationType,
+    action: ActionType,
     quantity: number,
-    productId: string
+    product: Product
   ) => {
-    console.log(
-      '🚀 ~ file: index.ts ~ line 22 ~ updatedCartItems ~ cartItems',
-      cartItems
-    );
     const updatedCartItems = cartItems.map((cartProduct) => {
-      if (cartProduct._id === productId) {
-        let updatedQuantity = cartProduct.quantity;
-        console.log('operation', operation);
-        if (operation === 'increase') updatedQuantity += quantity;
-        if (operation === 'decrease') updatedQuantity -= quantity;
-        console.log('passei');
+      const actions = {
+        [ActionType.INCREASE_PRODUCT_QTY]: function (
+          currentQty: number,
+          qty: number
+        ) {
+          return currentQty + qty;
+        },
+        [ActionType.DECREASE_PRODUCT_QTY]: function (
+          currentQty: number,
+          qty: number
+        ) {
+          return currentQty - qty;
+        }
+      };
+      if (cartProduct._id === product._id) {
         return {
           ...cartProduct,
-          quantity: updatedQuantity
+          quantity: actions[action](cartProduct.quantity, quantity)
         };
-      } else {
-        return cartProduct;
       }
+      return cartProduct;
     });
 
-    console.log(
-      '🚀 ~ file: index.ts ~ line 36 ~ useManageCart ~ updatedCartItems',
-      updatedCartItems
-    );
     setCartItems(updatedCartItems);
   };
 
   const onAddProductToCart = (product: Product, quantity: number) => {
-    console.log('product', product);
     const isProductInCart = cartItems.find(
       (item: CartProductType) => item._id === product._id
     );
-
-    setTotalPrice(
-      (prevTotalPrice) => prevTotalPrice + product.price * quantity
-    );
-    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
-
     if (isProductInCart) {
-      updateProductQty(cartItems, 'increase', 1, product._id);
+      updateProductQty(
+        cartItems,
+        ActionType.INCREASE_PRODUCT_QTY,
+        quantity,
+        product
+      );
     } else {
       const currentProduct = { ...product, quantity: quantity };
 
       setCartItems([...cartItems, currentProduct]);
     }
+
+    setTotalPrice(
+      (prevTotalPrice) => prevTotalPrice + product.price * quantity
+    );
+    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
     toast.success(`${quantity} ${product.name} added to the cart.`);
   };
@@ -85,35 +86,22 @@ export default function useManageCart() {
     }
   };
 
-  const toggleCartItemQuanitity = (
-    product: CartProductType,
-    cartAction: string
-  ) => {
-    if (cartAction === ActionType.INCREASE_ITEM_QTY) {
-      setCartItems((previousCartItems) =>
-        previousCartItems.map((item) => {
-          if (item._id === product._id) {
-            return { ...item, quantity: item.quantity + 1 };
-          }
-          return item;
-        })
-      );
+  const updateCart = (product: CartProductType, cartAction: string) => {
+    if (cartAction === ActionType.INCREASE_PRODUCT_QTY) {
+      updateProductQty(cartItems, ActionType.INCREASE_PRODUCT_QTY, 1, product);
 
       setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
     }
 
-    if (cartAction === ActionType.DECREASE_ITEM_QTY) {
+    if (cartAction === ActionType.DECREASE_PRODUCT_QTY) {
       if (product.quantity > 1) {
-        setCartItems((previousCartItems) =>
-          previousCartItems.map((item) => {
-            if (item._id === product._id) {
-              return { ...item, quantity: item.quantity - 1 };
-            }
-            return item;
-          })
+        updateProductQty(
+          cartItems,
+          ActionType.DECREASE_PRODUCT_QTY,
+          1,
+          product
         );
-
         setTotalPrice((prevTotalPrice) => prevTotalPrice - product.price);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
       }
@@ -123,7 +111,7 @@ export default function useManageCart() {
   return {
     onAddProductToCart,
     onRemoveProductFromCart,
-    toggleCartItemQuanitity,
+    updateCart,
     cartItems,
     totalPrice,
     totalQuantities,
