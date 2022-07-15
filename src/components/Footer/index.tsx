@@ -4,17 +4,21 @@ import {
   AiOutlineTwitter,
   AiOutlineCopyrightCircle
 } from 'react-icons/ai';
+// -- Styles
+import * as S from './styles';
+
 const index = () => {
   return (
-    <div className="footer-container">
+    <S.Container>
       <p>
-        <AiOutlineCopyrightCircle /> 2022 Phanox Headphones All rights reserverd
+        <AiOutlineCopyrightCircle aria-label="Copyright circle" /> 2022 Phanox
+        Headphones All rights reserverd
       </p>
-      <p className="icons">
-        <AiFillInstagram />
-        <AiOutlineTwitter />
-      </p>
-    </div>
+      <S.IconsContainer>
+        <AiFillInstagram aria-label="Instagram" />
+        <AiOutlineTwitter aria-label="Twitter" />
+      </S.IconsContainer>
+    </S.Container>
   );
 };
 
