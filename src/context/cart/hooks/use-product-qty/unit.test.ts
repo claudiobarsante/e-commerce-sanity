@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useProductQty from './';
+import useProductQty from '.';
 
 describe('useProductQty', () => {
   it('should increase product quantity', () => {
@@ -25,6 +25,6 @@ describe('useProductQty', () => {
     act(() => {
       result.current.decreaseQty();
     });
-    expect(result.current.qty).toBe(0);
+    expect(result.current.qty).toBe(1);
   });
 });
