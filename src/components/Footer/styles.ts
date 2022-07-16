@@ -7,13 +7,16 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
 
-    font-weight: ${theme.font.xbold};
-    font-size: ${theme.font.sizes.small};
     gap: 1rem;
     margin-top: 2rem;
     padding: 3rem 1rem;
     text-align: center;
     color: ${theme.colors.blue};
+
+    span {
+      font-weight: ${theme.font.xbold};
+      font-size: ${theme.font.sizes.small};
+    }
   `}
 `;
 
