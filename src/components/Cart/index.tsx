@@ -98,6 +98,7 @@ const Cart = ({ isVisible }: CartProps) => {
                     layout="responsive"
                     height={450}
                     width={450}
+                    role="img"
                   />
                 </div>
                 <div className="item-desc">

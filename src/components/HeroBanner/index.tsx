@@ -36,6 +36,7 @@ const index = ({ heroBanner }: HeroBannerProps) => {
             layout="fill"
             objectFit="contain"
             priority
+            role="img"
           />
         </div>
 

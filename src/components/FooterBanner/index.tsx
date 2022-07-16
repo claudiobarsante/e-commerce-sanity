@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { BannerInfo } from 'components/HeroBanner';
 // -- Sanity client
 import { urlFor } from 'lib/client';
+import Button from 'components/Button';
 
 type FooterBannerprops = {
   footerBanner: BannerInfo;
@@ -22,11 +23,14 @@ const index = ({ footerBanner }: FooterBannerprops) => {
     image,
     desc
   } = footerBanner;
+  console.log('product: ' + product);
+
   return (
     <div className="footer-banner-container">
-      <div className="banner-desc">
+      {/* <div className="banner-desc"> */}
+      <div className="">
         <div className="left">
-          <p>{discount}</p>
+          <p>{discount}qqqqqqqqq</p>
           <h3>{largeText1}</h3>
           <h3>{largeText2}</h3>
           <p>{saleTime}</p>
@@ -36,17 +40,28 @@ const index = ({ footerBanner }: FooterBannerprops) => {
           <h3>{midText}</h3>
           <p>{desc}</p>
           <Link href={`/product/${product}`}>
-            <button type="button" className="" role="button">
+            <Button
+              isUpperCase={false}
+              hasRadius
+              isFilled
+              backgroundColor="white"
+              size="small"
+              aria-label={buttonText}
+            >
               {buttonText}
-            </button>
+            </Button>
+            {/* <button type="button" className="" role="button">
+              {buttonText}
+            </button> */}
           </Link>
         </div>
-        <Img
+        {/* <Img
           src={urlFor(image.asset).url()}
           alt={product}
           className="footer-banner-image"
           layout="fill"
-        />
+          role="image"
+        /> */}
       </div>
     </div>
   );

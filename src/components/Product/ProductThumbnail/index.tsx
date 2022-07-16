@@ -31,6 +31,7 @@ const ProductThumbnail = ({
           width={70}
           onMouseEnter={() => onSetIndex(currentIndex)}
           alt={name}
+          role="img"
         />
       ))}
     </div>

@@ -31,6 +31,7 @@ const index = ({ product }: ProductProps) => {
               width={250}
               height={250}
               className="product-image"
+              role="img"
             />
           )}
 
