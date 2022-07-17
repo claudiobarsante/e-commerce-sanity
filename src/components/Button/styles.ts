@@ -1,5 +1,6 @@
 import styled, { css, DefaultTheme } from 'styled-components';
 import { ButtonProps } from '.';
+import media from 'styled-media-query';
 
 const containerModifiers = {
   small: () => css`
@@ -7,6 +8,9 @@ const containerModifiers = {
   `,
   medium: () => css`
     max-width: 20rem;
+    ${media.lessThan('medium')`
+      width:15rem;  
+    `}
   `,
   large: () => css`
     max-width: 20rem;
@@ -36,9 +40,6 @@ export const Container = styled.button<ButtonProps>`
     background-color: white;
     cursor: pointer;
     color: ${theme.colors.primary};
-    /* font-size: ${theme.font.sizes.large};
-    font-weight: ${theme.font.xbold} */
-    // padding: 10px 20px;
     transform: scale(1, 1);
     transition: transform 0.5s ease;
 
@@ -52,55 +53,10 @@ export const Container = styled.button<ButtonProps>`
       font-weight: ${theme.font.xbold};
       font-size: ${theme.font.sizes.large};
     }
+
     ${!!size && containerModifiers[size]()}
     ${isUpperCase && containerModifiers.upperCase()}
     ${hasRadius && containerModifiers.radius()}
     ${isFilled && containerModifiers[backgroundColor](theme)}
   `}
 `;
-/**
- * 
- * .buttons .add-to-cart{
-  padding: 10px 20px;
-  border: 1px solid #f02d34 ;
-  margin-top: 40px;
-  font-size: 18px;
-  font-weight: 500;
-  background-color: white;
-  color: #f02d34;
-  cursor: pointer;
-  width: 200px;
-   transform: scale(1, 1);
-  transition: transform 0.5s ease;
-}
-.buttons .add-to-cart:hover{
-  transform:scale(1.1,1.1)
-}
-.buttons .buy-now{
-  width: 200px;
-
-  padding: 10px 20px;
-  background-color: #f02d34;
-  color: white;
-  border: none;
-  margin-top: 40px;
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-   transform: scale(1, 1);
-  transition: transform 0.5s ease;
-}
-.buttons .buy-now:hover{
-  transform:scale(1.1,1.1)
-}
-
-
------Media query-----
-//'@'media screen and (max-width:800px) {
- .buttons .add-to-cart{
-    width: 150px;
-  }
-  .buttons .buy-now{
-    width: 150px;
-  }
- */
