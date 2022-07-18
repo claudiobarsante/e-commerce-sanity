@@ -4,7 +4,7 @@ export const themeApp = {
     gutter: '3.2rem' //spacing between content tracks
   },
   border: {
-    radius: '0.4rem'
+    radius: '1.5rem'
   },
   font: {
     family:

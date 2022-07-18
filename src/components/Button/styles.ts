@@ -50,13 +50,13 @@ export const Container = styled.button<ButtonProps>`
     span {
       display: inline-block;
       padding: 10px 20px;
-      font-weight: ${theme.font.xbold};
+      font-weight: ${theme.font.bold};
       font-size: ${theme.font.sizes.large};
     }
 
     ${!!size && containerModifiers[size]()}
     ${isUpperCase && containerModifiers.upperCase()}
     ${hasRadius && containerModifiers.radius()}
-    ${isFilled && containerModifiers[backgroundColor](theme)}
+    ${isFilled && containerModifiers[backgroundColor!](theme)}
   `}
 `;

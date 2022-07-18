@@ -19,6 +19,7 @@ import { useCart } from 'context/cart';
 import { CartStatus } from 'context/cart/types';
 import ProductDetail from 'components/Product/ProductDetail';
 import ProductThumbnail from 'components/Product/ProductThumbnail';
+import Button from 'components/Button';
 
 type ProductDetailsProps = {
   product: ProductInfo;
@@ -81,21 +82,40 @@ export default function ProductDetails({
               </span>
             </p>
           </div>
-          <div className="buttons">
-            <button
+          <div>
+            <Button
+              isUpperCase={false}
+              hasRadius={false}
+              isFilled={false}
+              size="medium"
+              onClick={() => onAddProductToCart(product, qty)}
+            >
+              Add to Cart
+            </Button>
+            <Button
+              isUpperCase={false}
+              hasRadius={false}
+              isFilled={true}
+              backgroundColor="red"
+              size="medium"
+              onClick={() => handleBuyNow()}
+            >
+              Buy now
+            </Button>
+            {/* <button
               type="button"
               className="add-to-cart"
               onClick={() => onAddProductToCart(product, qty)}
             >
               Add to Cart
-            </button>
-            <button
+            </button> */}
+            {/* <button
               type="button"
               className="buy-now"
               onClick={() => handleBuyNow}
             >
               Buy Now
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

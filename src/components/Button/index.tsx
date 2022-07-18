@@ -4,7 +4,7 @@ import React, {
   ButtonHTMLAttributes
 } from 'react';
 import * as S from './styles';
-import { ContainerProps } from './styles';
+//import { ContainerProps } from './styles';
 
 type ButtonTypes =
   | AnchorHTMLAttributes<HTMLAnchorElement>
@@ -15,7 +15,7 @@ export type ButtonProps = {
   isUpperCase: boolean;
   hasRadius: boolean;
   isFilled: boolean;
-  backgroundColor: 'white' | 'red';
+  backgroundColor?: 'white' | 'red';
   size?: 'small' | 'medium' | 'large';
   icon?: JSX.Element;
 } & ButtonTypes;
