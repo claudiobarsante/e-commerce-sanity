@@ -9,26 +9,32 @@ const customMedia = generateMedia({
 
 export const Container = styled.section`
   ${({ theme }) => css`
-    border: 1px dashed yellow;
     display: grid;
     grid-template-columns: 30% 40% 30%;
-    justify-content: center;
-    align-content: center;
+
+    justify-items: center;
+    align-items: center;
+
     background-color: ${theme.colors.primary};
     border-radius: ${theme.border.radius}; //15px;
+    border: 1px dashed yellow;
     color: white;
+
     height: 40rem;
-    line-height: 1;
-    margin-top: 12rem;
-    // gap: ${theme.grid.gutter};
-    padding: 4rem 4rem;
-    position: relative;
     width: 100%;
 
-    /* ${media.lessThan('medium')`
-     height: 560px;
-     margin-top: 80px; 
-    `} */
+    line-height: 1;
+    margin-top: 12rem;
+
+    position: relative;
+
+    ${media.lessThan('small')`
+    grid-template-columns: 50% 50%;
+    grid-template-rows:50% 50%;
+    grid-template-areas: 'title image' 'description description';
+    
+    
+    `};
   `}
 `;
 
@@ -36,6 +42,18 @@ export const Left = styled.div`
   border: 1px solid black;
   overflow-x: auto;
   width: 100%;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  ${media.lessThan('small')`
+       grid-area: title;
+       //font-weight: 600;
+      // font-size: 20px;       
+    `}
+
   h3 {
     font-weight: 900;
     font-size: 80px;
@@ -48,13 +66,10 @@ export const Left = styled.div`
        font-weight: 600;
        font-size: 40px;       
     `}
-    ${media.lessThan('small')`
-       font-weight: 600;
-       font-size: 20px;       
-    `}
   }
   p {
     margin: 1.8rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -63,8 +78,20 @@ export const Right = styled.div`
   line-height: 1.4;
   overflow-x: auto;
   width: 100%;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
+  font-weight: 600;
+  font-size: 30px;
+
+  button {
+    margin-top: 2rem;
+  }
   ${media.lessThan('small')`
+  grid-area:description;
      h3{
       border: 1px solid grey;
       font-weight: 100;
@@ -96,6 +123,12 @@ export const ImageContainer = styled.div`
   position: relative;
   width: 100%;
   overflow-x: auto;
+  height: 80%;
+  height: inherit;
+  ${media.lessThan('small')`
+  grid-area: image;
+  `};
+
   img {
     object-fit: fill;
     ${media.lessThan('small')`

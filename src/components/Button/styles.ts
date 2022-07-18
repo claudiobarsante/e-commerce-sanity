@@ -26,11 +26,15 @@ const containerModifiers = {
   `,
   white: (theme: DefaultTheme) => css`
     background-color: white;
-    color: ${theme.colors.primary};
+    span {
+      color: ${theme.colors.primary};
+    }
   `,
   red: (theme: DefaultTheme) => css`
     background-color: ${theme.colors.primary};
-    color: white;
+    span {
+      color: white;
+    }
   `
 };
 
