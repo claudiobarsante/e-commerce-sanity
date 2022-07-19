@@ -31,28 +31,26 @@ export const Container = styled.section`
     ${media.lessThan('small')`
     grid-template-columns: 50% 50%;
     grid-template-rows:50% 50%;
-    grid-template-areas: 'title image' 'description description';
-    
-    
+    grid-template-areas: 'title image' 'description description';  
+    height:inherit;
     `};
   `}
 `;
 
 export const Left = styled.div`
-  border: 1px solid black;
-  overflow-x: auto;
-  width: 100%;
-  height: inherit;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
+  border: 1px solid black;
+  height: 100%;
+  overflow-x: auto;
+  width: 100%;
+
   ${media.lessThan('small')`
-       grid-area: title;
-       //font-weight: 600;
-      // font-size: 20px;       
-    `}
+       grid-area: title;          
+  `}
 
   h3 {
     font-weight: 900;
@@ -73,12 +71,31 @@ export const Left = styled.div`
   }
 `;
 
+export const ImageContainer = styled.div`
+  border: 1px solid green;
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+
+  height: 100%;
+  ${media.lessThan('small')`
+     grid-area: image;
+  `};
+
+  img {
+    object-fit: fill;
+    ${media.lessThan('small')`
+       object-fit: contain;    
+    `}
+  }
+`;
+
 export const Right = styled.div`
   border: 1px solid grey;
   line-height: 1.4;
   overflow-x: auto;
   width: 100%;
-  height: inherit;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -118,24 +135,6 @@ export const Right = styled.div`
   }
 `;
 
-export const ImageContainer = styled.div`
-  border: 1px solid green;
-  position: relative;
-  width: 100%;
-  overflow-x: auto;
-  height: 80%;
-  height: inherit;
-  ${media.lessThan('small')`
-  grid-area: image;
-  `};
-
-  img {
-    object-fit: fill;
-    ${media.lessThan('small')`
-       object-fit: contain;    
-    `}
-  }
-`;
 // export const Image = styled(Img)`
 //   // position: absolute;
 //   /* top: -35%;

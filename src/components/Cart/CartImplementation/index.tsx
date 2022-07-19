@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, memo } from 'react';
+import React, { useCallback, useRef } from 'react';
 import Img from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -15,24 +15,38 @@ import { useCart } from 'context/cart';
 // -- Sanity image builder
 import { urlFor } from 'lib/client';
 // -- Types
-import { ActionType, CartStatus, ShowCartType } from 'context/cart/types';
+import {
+  ActionType,
+  CartContextData,
+  CartStatus,
+  ShowCartType
+} from 'context/cart/types';
+import { CartProps } from 'components/Cart';
+
 import { getStripe } from 'lib/stripe-js';
 
-export type CartProps = {
-  isVisible: ShowCartType;
-};
+type CartImplementationProps = Pick<
+  CartContextData,
+  | 'totalPrice'
+  | 'totalQuantities'
+  | 'cartItems'
+  | 'setShowCart'
+  | 'updateCart'
+  | 'onRemoveProductFromCart'
+> &
+  Pick<CartProps, 'isVisible'>;
 
-const CartComponent = () => {
+const CartImplementation = ({
+  isVisible,
+  totalPrice,
+  totalQuantities,
+  cartItems,
+  setShowCart,
+  updateCart,
+  onRemoveProductFromCart
+}: CartImplementationProps) => {
+  console.log('renderizei o cart - implementation');
   const cartRef = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const {
-    showCart,
-    totalPrice,
-    totalQuantities,
-    cartItems,
-    setShowCart,
-    updateCart,
-    onRemoveProductFromCart
-  } = useCart();
 
   const handleCheckout = useCallback(async () => {
     const stripe = await getStripe();
@@ -61,7 +75,7 @@ const CartComponent = () => {
   };
 
   return (
-    <div className={displayClass[showCart]} ref={cartRef}>
+    <div className={displayClass[isVisible]} ref={cartRef}>
       <div className="cart-container">
         <button
           type="button"
@@ -163,6 +177,4 @@ const CartComponent = () => {
   );
 };
 
-export const Cart = memo(CartComponent, (prevProps, nextProps) => {
-  return Object.is(prevProps, nextProps);
-});
+export default CartImplementation;

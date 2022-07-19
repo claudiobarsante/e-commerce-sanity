@@ -17,6 +17,7 @@
     "@stripe/stripe-js": "^1.25.0",
     "@types/styled-components": "^5.1.25",
     "canvas-confetti": "^1.5.1",
+    "dequal": "^2.0.3",
     "next": "^12.2.2",
     "next-sanity-image": "^3.2.1",
     "nextjs-progressbar": "^0.0.14",

@@ -3,13 +3,13 @@ import Link from 'next/link';
 // -- Icons
 import { AiOutlineShopping } from 'react-icons/ai';
 // -- components
-import Cart from 'components/Cart';
+import { Cart } from 'components/Cart';
 // -- Context
 import { useCart } from 'context/cart';
 import { CartStatus } from 'context/cart/types';
 
 const NavBar = () => {
-  const { showCart, setShowCart, totalQuantities } = useCart();
+  const { setShowCart, totalQuantities } = useCart();
 
   return (
     <div className="navbar-container">
@@ -24,7 +24,7 @@ const NavBar = () => {
         <AiOutlineShopping />
         <span className="cart-item-qty">{totalQuantities}</span>
       </button>
-      <Cart isVisible={showCart} />
+      <Cart />
     </div>
   );
 };
