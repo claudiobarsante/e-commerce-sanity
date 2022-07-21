@@ -18,7 +18,7 @@ import { useCart } from 'context/cart';
 // -- Types
 import { CartStatus } from 'context/cart/types';
 import ProductDetail from 'components/Product/ProductDetail';
-import ProductThumbnail from 'components/Product/ProductThumbnail';
+import { ProductThumbnail } from 'components/Product/ProductThumbnail';
 import Button from 'components/Button';
 
 type ProductDetailsProps = {

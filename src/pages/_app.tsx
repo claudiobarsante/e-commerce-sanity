@@ -10,6 +10,9 @@ import { CartProvider } from 'context/cart';
 import '../styles/globals.css';
 import GlobalStyles from 'styles/global';
 import { themeApp } from 'styles/theme';
+// -- Error
+import ErrorBoundary from 'components/ErrorBoundary/index';
+import ErrorFallback from 'components/ErrorFallback';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -25,7 +28,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             height={3}
             showOnShallow={true}
           />
-          <Component {...pageProps} />
+          <ErrorBoundary>
+            <Component {...pageProps} />
+          </ErrorBoundary>
         </Layout>
       </ThemeProvider>
     </CartProvider>

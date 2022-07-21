@@ -12,6 +12,7 @@ import {
 import { useProductQty, useManageCart } from '../cart/hooks';
 
 const CartContext = createContext<CartContextData>(cartContextDefaultValues);
+CartContext.displayName = 'CartContext';
 
 const CartProvider = ({ children }: CartProviderProps) => {
   const [showCart, setShowCart] = useState<ShowCartType>(CartStatus.INITIAL);

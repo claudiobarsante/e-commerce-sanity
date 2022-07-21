@@ -17,7 +17,7 @@ export const Container = styled.section`
 
     background-color: ${theme.colors.primary};
     border-radius: ${theme.border.radius}; //15px;
-    border: 1px dashed yellow;
+
     color: white;
 
     height: 40rem;
@@ -43,41 +43,44 @@ export const Left = styled.div`
   justify-content: center;
   align-items: center;
 
-  border: 1px solid black;
   height: 100%;
-  overflow-x: auto;
   width: 100%;
+
+  overflow-x: auto;
 
   ${media.lessThan('small')`
        grid-area: title;          
   `}
 
-  h3 {
-    font-weight: 900;
-    font-size: 80px;
-    margin-left: 2.5rem;
-    ${customMedia.lessThan('_1080px')`
-       font-weight: 600;
-       font-size: 60px;       
+  ${({ theme }) => css`
+    h3 {
+      font-weight: ${theme.font.xbold};
+      font-size: 8rem;
+      margin-left: 2.5rem;
+
+      ${customMedia.lessThan('_1080px')`
+       font-weight: ${theme.font.bold};
+       font-size: 6rem;       
     `}
-    ${media.lessThan('medium')`
-       font-weight: 600;
-       font-size: 40px;       
+      ${media.lessThan('medium')`
+       font-weight: ${theme.font.bold};
+       font-size: 4rem;       
     `}
-  }
-  p {
-    margin: 1.8rem;
-    font-size: 1.5rem;
-  }
+    }
+    p {
+      margin: 1.8rem;
+      font-size: 1.5rem;
+    }
+  `}
 `;
 
 export const ImageContainer = styled.div`
-  border: 1px solid green;
-  position: relative;
-  width: 100%;
   overflow-x: auto;
+  position: relative;
 
   height: 100%;
+  width: 100%;
+
   ${media.lessThan('small')`
      grid-area: image;
   `};
@@ -87,86 +90,54 @@ export const ImageContainer = styled.div`
     ${media.lessThan('small')`
        object-fit: contain;    
     `}
+    ${media.lessThan('medium')`
+      object-fit: scale-down;
+    `}
   }
 `;
 
 export const Right = styled.div`
-  border: 1px solid grey;
-  line-height: 1.4;
-  overflow-x: auto;
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  font-weight: 600;
-  font-size: 30px;
+  height: 100%;
+  width: 100%;
 
-  button {
-    margin-top: 2rem;
-  }
-  ${media.lessThan('small')`
-  grid-area:description;
-     h3{
-      border: 1px solid grey;
-      font-weight: 100;
-       font-size: 5px;  
-     }
-            
-    `}
+  // line-height: 1.4;
+  overflow-x: auto;
 
-  /* h3 {
-    font-weight: 800;
-    font-size: 60px;
-    ${customMedia.lessThan('_1080px')`
-       font-weight: 600;
-       font-size: 50px;       
-    `}
+  ${({ theme }) => css`
+    h3 {
+      font-size: 6rem;
+      font-weight: ${theme.font.bold};
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    ${media.lessThan('small')`
+     grid-area:description;                
+   `}
 
     ${media.lessThan('medium')`
-       font-weight: 600;
-       font-size: 30px;       
+      h3{    
+       font-size: 3rem; 
+      }             
     `}
-  } */
+    ${customMedia.lessThan('_1080px')`      
+      h3{    
+       font-size: 5rem; 
+         }        
+    `}
+  `}
+
+  button {
+    margin-top: 3rem;
+  }
+
   p {
     font-size: 2.5rem;
+    text-align: center;
   }
 `;
-
-// export const Image = styled(Img)`
-//   // position: absolute;
-//   /* top: -35%;
-//   left: 8%; */
-//   // top: -25%;
-//   // left: 25%;
-//   //width: 100%;
-//   // height: 100%;
-
-//   ${media.lessThan('medium')`
-//     width: 77%;
-//     left: 30%;
-//     top: 6%;
-//     height: 56%;
-//   `}
-// `;
-//    @media screen and (max-width:800px) {
-//      .hero-banner-container{
-//        height: 560px;
-//      }
-//      .hero-banner-image{
-//        width: 77%;
-//        height: 62%;
-//        top: -2%;
-//        right: -6%;
-//      }
-//      .footer-banner-container{
-//        height: 560px;
-//        margin-top: 80px;
-//      }
-
-//      .banner-desc{
-//           display: flex ;
-//           justify-content: space-between;
-//         }

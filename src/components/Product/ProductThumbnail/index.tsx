@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, memo } from 'react';
 import Img from 'next/image';
 // -- Sanity image builder
 import { urlFor } from 'lib/client';
@@ -10,7 +10,7 @@ type ProductThumbnailProps = {
   onSetIndex: Dispatch<SetStateAction<number>>;
 } & Pick<ProductInfo, 'image' | 'name'>;
 
-const ProductThumbnail = ({
+const ProductThumbnailComponent = ({
   image,
   index,
   name,
@@ -38,4 +38,9 @@ const ProductThumbnail = ({
   );
 };
 
-export default ProductThumbnail;
+export const ProductThumbnail = memo(
+  ProductThumbnailComponent,
+  (prevProps, nextProps) => {
+    return Object.is(prevProps, nextProps);
+  }
+);

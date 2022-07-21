@@ -41,7 +41,7 @@ const index = ({ heroBanner }: HeroBannerProps) => {
         </div>
 
         <Link href={`/product/${product}`}>
-          <button type="button" className="" role="button">
+          <button type="button" className="">
             {buttonText}
           </button>
         </Link>
