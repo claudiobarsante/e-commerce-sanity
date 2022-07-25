@@ -16,21 +16,21 @@ export default function useManageCart() {
     quantity: number,
     product: Product
   ) => {
+    const actions = {
+      [ActionType.INCREASE_PRODUCT_QTY]: function (
+        currentQty: number,
+        qty: number
+      ) {
+        return currentQty + qty;
+      },
+      [ActionType.DECREASE_PRODUCT_QTY]: function (
+        currentQty: number,
+        qty: number
+      ) {
+        return currentQty - qty;
+      }
+    };
     const updatedCartItems = cartItems.map((cartProduct) => {
-      const actions = {
-        [ActionType.INCREASE_PRODUCT_QTY]: function (
-          currentQty: number,
-          qty: number
-        ) {
-          return currentQty + qty;
-        },
-        [ActionType.DECREASE_PRODUCT_QTY]: function (
-          currentQty: number,
-          qty: number
-        ) {
-          return currentQty - qty;
-        }
-      };
       if (cartProduct._id === product._id) {
         return {
           ...cartProduct,

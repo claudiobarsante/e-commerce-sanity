@@ -105,7 +105,6 @@ export const Right = styled.div`
   height: 100%;
   width: 100%;
 
-  // line-height: 1.4;
   overflow-x: auto;
 
   ${({ theme }) => css`
@@ -117,7 +116,11 @@ export const Right = styled.div`
     }
 
     ${media.lessThan('small')`
-     grid-area:description;                
+     grid-area:description;  
+     line-height: 0.2; 
+     button {
+      margin-bottom: 0.5rem;
+  }             
    `}
 
     ${media.lessThan('medium')`
