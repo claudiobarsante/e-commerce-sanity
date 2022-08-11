@@ -7,9 +7,10 @@ import { Product, FooterBanner, HeroBanner } from 'components';
 // -- Types
 import { BannerInfo } from 'components/HeroBanner';
 import { ProductType } from 'components/Product/types';
+import ProductsContainer from 'components/Product/ProductsContainer';
 
 export type Props = {
-  productsData: Product[];
+  productsData: ProductType[];
   bannerData: BannerInfo[];
 };
 
@@ -17,7 +18,7 @@ const Home = ({ productsData, bannerData }: Props) => {
   return (
     <>
       {bannerData.length && <HeroBanner heroBanner={bannerData[0]} />}
-
+      <ProductsContainer productsData={productsData} />
       {bannerData && <FooterBanner footerBanner={bannerData[0]} />}
     </>
   );
