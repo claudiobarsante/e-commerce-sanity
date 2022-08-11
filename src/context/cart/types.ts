@@ -1,38 +1,27 @@
 import { Dispatch, SetStateAction } from 'react';
 // -- Types
-import { ProductInfo as Product } from 'components/Product';
+import { ProductType as ProductType } from 'components/Product/types';
 
-export enum ActionType {
-  INCREASE_PRODUCT_QTY = 'inc',
-  DECREASE_PRODUCT_QTY = 'dec'
-}
+export type ActionType = 'increase' | 'decrease';
 
 export type CartProductType = {
   quantity: number;
-} & Product;
+} & ProductType;
 
-export enum CartStatus {
-  INITIAL = 'initial',
-  SHOW = 'show',
-  HIDDEN = 'hidden'
-}
-export type ShowCartType =
-  | CartStatus.INITIAL
-  | CartStatus.SHOW
-  | CartStatus.HIDDEN;
+export type CartStatus = 'initial' | 'show' | 'hidden';
 
 export type CartContextData = {
   cartItems: CartProductType[];
   decreaseQty: () => void;
   increaseQty: () => void;
-  onAddProductToCart: (product: Product, quantity: number) => void;
-  onRemoveProductFromCart: (product: Product) => void;
+  onAddProductToCart: (product: ProductType, quantity: number) => void;
+  onRemoveProductFromCart: (product: ProductType) => void;
   qty: number;
   setCartItems: Dispatch<SetStateAction<CartProductType[]>>;
-  setShowCart: Dispatch<SetStateAction<ShowCartType>>;
+  setShowCart: Dispatch<SetStateAction<CartStatus>>;
   setTotalPrice: (price: number) => void;
   setTotalQuantities: (qty: number) => void;
-  showCart: ShowCartType;
+  showCart: CartStatus;
   updateCart: (product: CartProductType, cartAction: ActionType) => void;
   totalPrice: number;
   totalQuantities: number;

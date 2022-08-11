@@ -6,10 +6,10 @@ import { configuredSanityClient } from 'lib/client';
 import { Product, FooterBanner, HeroBanner } from 'components';
 // -- Types
 import { BannerInfo } from 'components/HeroBanner';
-import { ProductInfo } from 'components/Product';
+import { ProductType } from 'components/Product/types';
 
-type Props = {
-  productsData: ProductInfo[];
+export type Props = {
+  productsData: Product[];
   bannerData: BannerInfo[];
 };
 
@@ -18,15 +18,6 @@ const Home = ({ productsData, bannerData }: Props) => {
     <>
       {bannerData.length && <HeroBanner heroBanner={bannerData[0]} />}
 
-      <div className="products-heading">
-        <h2>Best Selling products</h2>
-        <p>speaker there are many variations passages</p>
-      </div>
-      <div className="products-container">
-        {productsData?.map((product) => (
-          <Product key={product._id} product={product} />
-        ))}
-      </div>
       {bannerData && <FooterBanner footerBanner={bannerData[0]} />}
     </>
   );

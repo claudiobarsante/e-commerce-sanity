@@ -91,10 +91,7 @@ describe('useManageCart', () => {
       //*Increase the product qty in cart
       const newCartItemOne = { ...fakeProductOne, quantity: 1 };
       act(() => {
-        result.current.updateCart(
-          newCartItemOne,
-          ActionType.INCREASE_PRODUCT_QTY
-        );
+        result.current.updateCart(newCartItemOne, 'increase');
       });
 
       expect(result.current.totalPrice).toBe(20);
@@ -113,10 +110,7 @@ describe('useManageCart', () => {
       //*Decrease the product qty in cart
       const newCartItemOne = { ...fakeProductOne, quantity: 1 };
       act(() => {
-        result.current.updateCart(
-          newCartItemOne,
-          ActionType.DECREASE_PRODUCT_QTY
-        );
+        result.current.updateCart(newCartItemOne, 'decrease');
       });
 
       expect(result.current.totalPrice).toBe(10);
@@ -135,10 +129,7 @@ describe('useManageCart', () => {
       //*Decrease the product qty in cart
       const newCartItemOne = { ...fakeProductOne, quantity: 2 }; // current qty
       act(() => {
-        result.current.updateCart(
-          newCartItemOne,
-          ActionType.DECREASE_PRODUCT_QTY
-        );
+        result.current.updateCart(newCartItemOne, 'decrease');
       });
 
       expect(result.current.totalPrice).toBe(10);

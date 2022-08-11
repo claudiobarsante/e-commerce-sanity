@@ -69,9 +69,9 @@ const CartImplementation = ({
   }, [cartItems]);
 
   const displayClass = {
-    [CartStatus.INITIAL]: 'cart-wrapper-initial',
-    [CartStatus.SHOW]: 'cart-wrapper cart-wrapper-show',
-    [CartStatus.HIDDEN]: 'cart-wrapper cart-wrapper-hide'
+    initial: 'cart-wrapper-initial',
+    show: 'cart-wrapper cart-wrapper-show',
+    hidden: 'cart-wrapper cart-wrapper-hide'
   };
 
   return (
@@ -80,7 +80,7 @@ const CartImplementation = ({
         <button
           type="button"
           className="cart-heading"
-          onClick={() => setShowCart(CartStatus.HIDDEN)}
+          onClick={() => setShowCart('hidden')}
         >
           <AiOutlineLeft />
           <span className="heading">Your Cart</span>
@@ -94,7 +94,7 @@ const CartImplementation = ({
             <Link href="/">
               <button
                 type="button"
-                onClick={() => setShowCart(CartStatus.HIDDEN)}
+                onClick={() => setShowCart('hidden')}
                 className="btn"
               >
                 Continue Shopping
@@ -126,18 +126,14 @@ const CartImplementation = ({
                       <p className="quantity-desc">
                         <span
                           className="minus"
-                          onClick={() =>
-                            updateCart(product, ActionType.DECREASE_PRODUCT_QTY)
-                          }
+                          onClick={() => updateCart(product, 'decrease')}
                         >
                           <AiOutlineMinus />
                         </span>
                         <span className="num">{product.quantity}</span>
                         <span
                           className="plus"
-                          onClick={() =>
-                            updateCart(product, ActionType.INCREASE_PRODUCT_QTY)
-                          }
+                          onClick={() => updateCart(product, 'increase')}
                         >
                           <AiOutlinePlus />
                         </span>

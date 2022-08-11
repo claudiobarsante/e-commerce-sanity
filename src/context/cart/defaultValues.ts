@@ -1,6 +1,6 @@
-import { CartStatus } from './types';
+import { CartContextData } from './types';
 
-export const cartContextDefaultValues = {
+export const cartContextDefaultValues: CartContextData = {
   cartItems: [],
   decreaseQty: () => null,
   increaseQty: () => null,
@@ -11,7 +11,7 @@ export const cartContextDefaultValues = {
   setShowCart: () => null,
   setTotalPrice: () => null,
   setTotalQuantities: () => null,
-  showCart: CartStatus.INITIAL,
+  showCart: 'initial',
   updateCart: () => null,
   totalPrice: 0,
   totalQuantities: 0

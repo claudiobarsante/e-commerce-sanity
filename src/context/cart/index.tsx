@@ -2,12 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 // -- Default values
 import { cartContextDefaultValues } from './defaultValues';
 // -- Types
-import {
-  CartContextData,
-  CartProviderProps,
-  CartStatus,
-  ShowCartType
-} from './types';
+import { CartContextData, CartProviderProps, CartStatus } from './types';
 // -- Custom hooks
 import { useProductQty, useManageCart } from '../cart/hooks';
 
@@ -15,7 +10,7 @@ const CartContext = createContext<CartContextData>(cartContextDefaultValues);
 CartContext.displayName = 'CartContext';
 
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [showCart, setShowCart] = useState<ShowCartType>(CartStatus.INITIAL);
+  const [showCart, setShowCart] = useState<CartStatus>('initial');
 
   const { qty, increaseQty, decreaseQty } = useProductQty();
   const {

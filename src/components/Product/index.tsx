@@ -10,7 +10,7 @@ import * as S from './styles';
 // -- Utils
 import formatValue from 'lib/formatValue';
 
-const index = ({ product }: ProductProps) => {
+const Product = ({ product }: ProductProps) => {
   const { image, name, slug, price } = product;
   return (
     <Link href={`/product/${slug.current}`}>
@@ -32,4 +32,4 @@ const index = ({ product }: ProductProps) => {
   );
 };
 
-export default index;
+export default Product;

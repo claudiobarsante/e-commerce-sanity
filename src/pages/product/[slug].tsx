@@ -12,7 +12,7 @@ import {
 // -- Sanity client
 import { configuredSanityClient, urlFor } from 'lib/client';
 // -- Components,Types
-import Product, { ProductInfo } from 'components/Product';
+import { ProductType } from 'components/Product/types';
 // -- Custom hooks
 import { useCart } from 'context/cart';
 // -- Types
@@ -20,10 +20,11 @@ import { CartStatus } from 'context/cart/types';
 import ProductDetail from 'components/Product/ProductDetail';
 import { ProductThumbnail } from 'components/Product/ProductThumbnail';
 import Button from 'components/Button';
+import Product from 'components/Product';
 
 type ProductDetailsProps = {
-  product: ProductInfo;
-  products: ProductInfo[];
+  product: ProductType;
+  products: ProductType[];
 };
 
 export default function ProductDetails({
@@ -39,7 +40,7 @@ export default function ProductDetails({
 
   const handleBuyNow = () => {
     onAddProductToCart(product, qty);
-    setShowCart(CartStatus.SHOW);
+    setShowCart('show');
   };
 
   return (
@@ -145,7 +146,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         }
         `;
 
-  const products: ProductInfo[] = await configuredSanityClient.fetch(query);
+  const products: ProductType[] = await configuredSanityClient.fetch(query);
 
   const paths = products.map((product) => ({
     params: {

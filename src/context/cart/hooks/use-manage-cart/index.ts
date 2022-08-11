@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 // --Types
 import { ActionType, CartProductType } from 'context/cart/types';
 // -- components
-import { ProductInfo as Product } from 'components/Product';
+import { ProductType as ProductType } from 'components/Product/types';
 
 export default function useManageCart() {
   const [cartItems, setCartItems] = useState<CartProductType[]>([]);
@@ -14,19 +14,13 @@ export default function useManageCart() {
     cartItems: CartProductType[],
     action: ActionType,
     quantity: number,
-    product: Product
+    product: ProductType
   ) => {
     const actions = {
-      [ActionType.INCREASE_PRODUCT_QTY]: function (
-        currentQty: number,
-        qty: number
-      ) {
+      increase: function (currentQty: number, qty: number) {
         return currentQty + qty;
       },
-      [ActionType.DECREASE_PRODUCT_QTY]: function (
-        currentQty: number,
-        qty: number
-      ) {
+      decrease: function (currentQty: number, qty: number) {
         return currentQty - qty;
       }
     };
@@ -43,17 +37,12 @@ export default function useManageCart() {
     setCartItems(updatedCartItems);
   };
 
-  const onAddProductToCart = (product: Product, quantity: number) => {
+  const onAddProductToCart = (product: ProductType, quantity: number) => {
     const isProductInCart = cartItems.find(
       (item: CartProductType) => item._id === product._id
     );
     if (isProductInCart) {
-      updateProductQty(
-        cartItems,
-        ActionType.INCREASE_PRODUCT_QTY,
-        quantity,
-        product
-      );
+      updateProductQty(cartItems, 'increase', quantity, product);
     } else {
       const currentProduct = { ...product, quantity: quantity };
 
@@ -68,7 +57,7 @@ export default function useManageCart() {
     toast.success(`${quantity} ${product.name} added to the cart.`);
   };
 
-  const onRemoveProductFromCart = (product: Product) => {
+  const onRemoveProductFromCart = (product: ProductType) => {
     const foundProduct = cartItems.find((item) => item._id === product._id);
 
     if (foundProduct) {
@@ -86,22 +75,17 @@ export default function useManageCart() {
     }
   };
 
-  const updateCart = (product: CartProductType, cartAction: string) => {
-    if (cartAction === ActionType.INCREASE_PRODUCT_QTY) {
-      updateProductQty(cartItems, ActionType.INCREASE_PRODUCT_QTY, 1, product);
+  const updateCart = (product: CartProductType, cartAction: ActionType) => {
+    if (cartAction === 'increase') {
+      updateProductQty(cartItems, cartAction, 1, product);
 
       setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
     }
 
-    if (cartAction === ActionType.DECREASE_PRODUCT_QTY) {
+    if (cartAction === 'decrease') {
       if (product.quantity > 1) {
-        updateProductQty(
-          cartItems,
-          ActionType.DECREASE_PRODUCT_QTY,
-          1,
-          product
-        );
+        updateProductQty(cartItems, cartAction, 1, product);
         setTotalPrice((prevTotalPrice) => prevTotalPrice - product.price);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
       }

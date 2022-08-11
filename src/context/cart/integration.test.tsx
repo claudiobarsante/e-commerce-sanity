@@ -16,19 +16,19 @@ describe('CartProvider', () => {
 
     //* Set cart status to 'initial'
     act(() => {
-      result.current.setShowCart(CartStatus.INITIAL);
+      result.current.setShowCart('initial');
     });
-    expect(result.current.showCart).toBe(CartStatus.INITIAL);
+    expect(result.current.showCart).toBe('initial');
     //*Set cart status to 'show'
     act(() => {
-      result.current.setShowCart(CartStatus.SHOW);
+      result.current.setShowCart('show');
     });
-    expect(result.current.showCart).toBe(CartStatus.SHOW);
+    expect(result.current.showCart).toBe('show');
     //*Set cart status to 'hidden'
     act(() => {
-      result.current.setShowCart(CartStatus.HIDDEN);
+      result.current.setShowCart('hidden');
     });
-    expect(result.current.showCart).toBe(CartStatus.HIDDEN);
+    expect(result.current.showCart).toBe('hidden');
   });
 
   it('should increase or decrease product qty', async () => {
@@ -72,10 +72,7 @@ describe('CartProvider', () => {
       //*Increase the product qty in cart
       const newCartItemOne = { ...fakeProductOne, quantity: 1 };
       act(() => {
-        result.current.updateCart(
-          newCartItemOne,
-          ActionType.INCREASE_PRODUCT_QTY
-        );
+        result.current.updateCart(newCartItemOne, 'increase');
       });
 
       expect(result.current.totalPrice).toBe(20);
@@ -100,10 +97,7 @@ describe('CartProvider', () => {
       //*Decrease the product qty in cart
       const newCartItemOne = { ...fakeProductOne, quantity: 1 };
       act(() => {
-        result.current.updateCart(
-          newCartItemOne,
-          ActionType.DECREASE_PRODUCT_QTY
-        );
+        result.current.updateCart(newCartItemOne, 'decrease');
       });
 
       expect(result.current.totalPrice).toBe(10);
@@ -128,10 +122,7 @@ describe('CartProvider', () => {
       //*Decrease the product qty in cart
       const newCartItemOne = { ...fakeProductOne, quantity: 2 }; // current qty
       act(() => {
-        result.current.updateCart(
-          newCartItemOne,
-          ActionType.DECREASE_PRODUCT_QTY
-        );
+        result.current.updateCart(newCartItemOne, 'decrease');
       });
 
       expect(result.current.totalPrice).toBe(10);

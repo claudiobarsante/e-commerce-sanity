@@ -3,7 +3,7 @@ export type ImageContent = {
   _type: string;
   asset: { _ref: string };
 };
-export type ProductInfo = {
+export type ProductType = {
   _id: string;
   details: string;
   image: ImageContent[];
@@ -13,5 +13,5 @@ export type ProductInfo = {
 };
 
 export type ProductProps = {
-  product: ProductInfo;
+  product: ProductType;
 };

@@ -3,7 +3,7 @@ import Img from 'next/image';
 // -- Sanity image builder
 import { urlFor } from 'lib/client';
 // -- Custom components
-import { ProductInfo } from '..';
+import { Product } from '..';
 
 type ProductDetailProps = { index: number } & Pick<
   ProductInfo,

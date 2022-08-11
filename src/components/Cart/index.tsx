@@ -15,11 +15,11 @@ import { useCart } from 'context/cart';
 // -- Sanity image builder
 import { urlFor } from 'lib/client';
 // -- Types
-import { ActionType, CartStatus, ShowCartType } from 'context/cart/types';
+import { ActionType, CartStatus } from 'context/cart/types';
 import { getStripe } from 'lib/stripe-js';
 
 export type CartProps = {
-  isVisible: ShowCartType;
+  isVisible: CartStatus;
 };
 
 const CartComponent = () => {
@@ -55,9 +55,9 @@ const CartComponent = () => {
   }, [cartItems]);
 
   const displayClass = {
-    [CartStatus.INITIAL]: 'cart-wrapper-initial',
-    [CartStatus.SHOW]: 'cart-wrapper cart-wrapper-show',
-    [CartStatus.HIDDEN]: 'cart-wrapper cart-wrapper-hide'
+    initial: 'cart-wrapper-initial',
+    show: 'cart-wrapper cart-wrapper-show',
+    hidden: 'cart-wrapper cart-wrapper-hide'
   };
 
   return (
@@ -66,7 +66,7 @@ const CartComponent = () => {
         <button
           type="button"
           className="cart-heading"
-          onClick={() => setShowCart(CartStatus.HIDDEN)}
+          onClick={() => setShowCart('hidden')}
         >
           <AiOutlineLeft />
           <span className="heading">Your Cart</span>
@@ -80,7 +80,7 @@ const CartComponent = () => {
             <Link href="/">
               <button
                 type="button"
-                onClick={() => setShowCart(CartStatus.HIDDEN)}
+                onClick={() => setShowCart('hidden')}
                 className="btn"
               >
                 Continue Shopping
@@ -112,18 +112,14 @@ const CartComponent = () => {
                       <p className="quantity-desc">
                         <span
                           className="minus"
-                          onClick={() =>
-                            updateCart(product, ActionType.DECREASE_PRODUCT_QTY)
-                          }
+                          onClick={() => updateCart(product, 'decrease')}
                         >
                           <AiOutlineMinus />
                         </span>
                         <span className="num">{product.quantity}</span>
                         <span
                           className="plus"
-                          onClick={() =>
-                            updateCart(product, ActionType.INCREASE_PRODUCT_QTY)
-                          }
+                          onClick={() => updateCart(product, 'increase')}
                         >
                           <AiOutlinePlus />
                         </span>
